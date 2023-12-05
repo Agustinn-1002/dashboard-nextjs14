@@ -1,4 +1,5 @@
 import { sql } from '@vercel/postgres';
+
 import {
   CustomerField,
   CustomersTableType,
@@ -72,12 +73,12 @@ export async function fetchCardData() {
       invoiceStatusPromise,
     ]);
     await new Promise((resolve) => setTimeout(resolve, 500));
-    
+
     const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
     const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
-    
+
     return {
       numberOfCustomers,
       numberOfInvoices,
@@ -183,6 +184,7 @@ export async function fetchCustomers() {
     `;
 
     const customers = data.rows;
+
     return customers;
   } catch (err) {
     console.error('Database Error:', err);
